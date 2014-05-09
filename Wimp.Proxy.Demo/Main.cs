@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 using Fiddler;
+using System.Threading;
 
 
 namespace Wimp.Proxy.Demo
@@ -93,11 +95,22 @@ namespace Wimp.Proxy.Demo
             // Handle Wimp Normal and High
             if (oSession.host.Contains("wimpmusic.com") && oSession.oResponse.headers.ExistsAndContains("Content-Type", "audio/mp4"))
             {
-                SetProgress(0);
                 SetStatusLabel("Downloading AAC...");
                 oSession.SaveResponseBody(TargetDirectory + name + ".m4a");
-                SetStatusLabel("Proxy started...");
-                SetProgress(100);
+                SetProgress(0);
+                SetStatusLabel("Download completed...");
+
+                if (Autoskip.Checked)
+                {
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    process.StartInfo.FileName = @"C:\Program Files (x86)\Wimp\wimp.exe";
+                    process.StartInfo.Arguments = "next";
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.RedirectStandardError = true;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.Start();
+                }
             }
 
             // Handle Wimp HiFi
@@ -146,6 +159,17 @@ namespace Wimp.Proxy.Demo
                     SetProgress(0);
                     SetStatusLabel("Download completed...");
 
+                    if (Autoskip.Checked)
+                    {
+                        System.Diagnostics.Process process = new System.Diagnostics.Process();
+                        process.StartInfo.FileName = @"C:\Program Files (x86)\Wimp\wimp.exe";
+                        process.StartInfo.Arguments = "next";
+                        process.StartInfo.UseShellExecute = false;
+                        process.StartInfo.CreateNoWindow = true;
+                        process.StartInfo.RedirectStandardError = true;
+                        process.StartInfo.RedirectStandardOutput = true;
+                        process.Start();
+                    }
                 }
             }
         }
@@ -166,6 +190,11 @@ namespace Wimp.Proxy.Demo
         }
 
         private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
         }

@@ -39,14 +39,16 @@
             this.Logo = new System.Windows.Forms.Label();
             this.Progress = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.Autoskip = new System.Windows.Forms.CheckBox();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status.SuspendLayout();
             this.SuspendLayout();
             // 
             // StartFiddler
             // 
-            this.StartFiddler.Location = new System.Drawing.Point(120, 45);
+            this.StartFiddler.Location = new System.Drawing.Point(120, 44);
             this.StartFiddler.Name = "StartFiddler";
-            this.StartFiddler.Size = new System.Drawing.Size(140, 38);
+            this.StartFiddler.Size = new System.Drawing.Size(96, 38);
             this.StartFiddler.TabIndex = 0;
             this.StartFiddler.Text = "Start Proxy";
             this.StartFiddler.UseVisualStyleBackColor = true;
@@ -55,9 +57,9 @@
             // StopFiddler
             // 
             this.StopFiddler.Enabled = false;
-            this.StopFiddler.Location = new System.Drawing.Point(265, 45);
+            this.StopFiddler.Location = new System.Drawing.Point(222, 44);
             this.StopFiddler.Name = "StopFiddler";
-            this.StopFiddler.Size = new System.Drawing.Size(137, 38);
+            this.StopFiddler.Size = new System.Drawing.Size(96, 38);
             this.StopFiddler.TabIndex = 1;
             this.StopFiddler.Text = "Stop Proxy";
             this.StopFiddler.UseVisualStyleBackColor = true;
@@ -67,15 +69,15 @@
             // 
             this.Path.Location = new System.Drawing.Point(164, 12);
             this.Path.Name = "Path";
-            this.Path.Size = new System.Drawing.Size(167, 20);
+            this.Path.Size = new System.Drawing.Size(154, 20);
             this.Path.TabIndex = 2;
             this.Path.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // Browse
             // 
-            this.Browse.Location = new System.Drawing.Point(337, 12);
+            this.Browse.Location = new System.Drawing.Point(324, 12);
             this.Browse.Name = "Browse";
-            this.Browse.Size = new System.Drawing.Size(65, 20);
+            this.Browse.Size = new System.Drawing.Size(78, 20);
             this.Browse.TabIndex = 3;
             this.Browse.Text = "Browse";
             this.Browse.UseVisualStyleBackColor = true;
@@ -95,8 +97,9 @@
             this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel,
             this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2,
             this.Progress});
-            this.Status.Location = new System.Drawing.Point(0, 94);
+            this.Status.Location = new System.Drawing.Point(0, 93);
             this.Status.Name = "Status";
             this.Status.Size = new System.Drawing.Size(414, 22);
             this.Status.TabIndex = 5;
@@ -105,9 +108,11 @@
             // 
             // StatusLabel
             // 
+            this.StatusLabel.AutoSize = false;
             this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(91, 17);
+            this.StatusLabel.Size = new System.Drawing.Size(120, 17);
             this.StatusLabel.Text = "Proxy stopped...";
+            this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Logo
             // 
@@ -129,14 +134,31 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(206, 17);
-            this.toolStripStatusLabel1.Spring = true;
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // Autoskip
+            // 
+            this.Autoskip.AutoSize = true;
+            this.Autoskip.Location = new System.Drawing.Point(324, 44);
+            this.Autoskip.Name = "Autoskip";
+            this.Autoskip.Size = new System.Drawing.Size(78, 17);
+            this.Autoskip.TabIndex = 7;
+            this.Autoskip.Text = "Auto Mode";
+            this.Autoskip.UseVisualStyleBackColor = true;
+            this.Autoskip.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(146, 17);
+            this.toolStripStatusLabel2.Spring = true;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(414, 116);
+            this.ClientSize = new System.Drawing.Size(414, 115);
+            this.Controls.Add(this.Autoskip);
             this.Controls.Add(this.Logo);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.label1);
@@ -167,6 +189,8 @@
         private System.Windows.Forms.Label Logo;
         private System.Windows.Forms.ToolStripProgressBar Progress;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.CheckBox Autoskip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
     }
 }
 
