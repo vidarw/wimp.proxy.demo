@@ -37,6 +37,8 @@
             this.Status = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Logo = new System.Windows.Forms.Label();
+            this.Progress = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +54,7 @@
             // 
             // StopFiddler
             // 
+            this.StopFiddler.Enabled = false;
             this.StopFiddler.Location = new System.Drawing.Point(265, 45);
             this.StopFiddler.Name = "StopFiddler";
             this.StopFiddler.Size = new System.Drawing.Size(137, 38);
@@ -90,7 +93,9 @@
             // Status
             // 
             this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusLabel});
+            this.StatusLabel,
+            this.toolStripStatusLabel1,
+            this.Progress});
             this.Status.Location = new System.Drawing.Point(0, 94);
             this.Status.Name = "Status";
             this.Status.Size = new System.Drawing.Size(414, 22);
@@ -114,6 +119,18 @@
             this.Logo.Size = new System.Drawing.Size(93, 73);
             this.Logo.TabIndex = 6;
             this.Logo.Text = "W";
+            this.Logo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Progress
+            // 
+            this.Progress.Name = "Progress";
+            this.Progress.Size = new System.Drawing.Size(100, 16);
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(206, 17);
+            this.toolStripStatusLabel1.Spring = true;
             // 
             // Main
             // 
@@ -148,6 +165,8 @@
         private System.Windows.Forms.StatusStrip Status;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
         private System.Windows.Forms.Label Logo;
+        private System.Windows.Forms.ToolStripProgressBar Progress;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

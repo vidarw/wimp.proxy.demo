@@ -33,6 +33,8 @@ namespace Wimp.Proxy.Demo
             StatusLabel.Text = "Proxy started...";
             Logo.ForeColor = Color.DarkGreen;
             FiddlerApplication.Startup(8888, true, false);
+            StartFiddler.Enabled = false;
+            StopFiddler.Enabled = true;
         }
 
         private void StopFiddler_Click(object sender, EventArgs e)
@@ -40,11 +42,47 @@ namespace Wimp.Proxy.Demo
             StatusLabel.Text = "Proxy stopped...";
             Logo.ForeColor = Color.Red;
             FiddlerApplication.Shutdown();
+            StopFiddler.Enabled = false;
+            StartFiddler.Enabled = true;
         }
 
         private void OnApplicationExit(object sender, EventArgs e)
         {
             FiddlerApplication.Shutdown();
+        }
+
+        delegate void SetTextCallback(string text);
+        private void SetStatusLabel(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.Status.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetStatusLabel);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.StatusLabel.Text = text;
+            }
+        }
+
+        delegate void SetProgressCallback(int progress);
+        private void SetProgress(int progress)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.Status.InvokeRequired)
+            {
+                SetProgressCallback d = new SetProgressCallback(SetProgress);
+                this.Invoke(d, new object[] { progress });
+            }
+            else
+            {
+                this.Progress.Value = progress;
+            }
         }
 
         private void FiddlerApplicationOnBeforeResponse(Session oSession)
@@ -55,9 +93,11 @@ namespace Wimp.Proxy.Demo
             // Handle Wimp Normal and High
             if (oSession.host.Contains("wimpmusic.com") && oSession.oResponse.headers.ExistsAndContains("Content-Type", "audio/mp4"))
             {
-                StatusLabel.Text = "Downloading AAC...";
+                SetProgress(0);
+                SetStatusLabel("Downloading AAC...");
                 oSession.SaveResponseBody(TargetDirectory + name + ".m4a");
-                StatusLabel.Text = "Proxy started...";
+                SetStatusLabel("Proxy started...");
+                SetProgress(100);
             }
 
             // Handle Wimp HiFi
@@ -73,7 +113,8 @@ namespace Wimp.Proxy.Demo
                 // If its a first package. Prepare memory stream.
                 if (offset == 0)
                 {
-                    StatusLabel.Text = "Downloading FLAC...";
+                    SetStatusLabel("Downloading FLAC...");
+                    SetProgress(0);
                     FlacBuffer = new MemoryStream(new byte[totalSize]);
                     FlacWriter = new BinaryWriter(FlacBuffer);
                 }
@@ -81,13 +122,13 @@ namespace Wimp.Proxy.Demo
                 // Add chunk to memorystream. Do nothing if we dont have a stream initialized.
                 if (FlacBuffer != null)
                 {
+                    SetProgress((int)Math.Floor((double)chunkEnd / (double)totalSize * 100.0));
                     FlacWriter.Write(oSession.responseBodyBytes);
                 }
 
                 // When download is complete; dump memory stream to file.
                 if (FlacBuffer != null && chunkEnd == (totalSize - 1))
                 {
-                    StatusLabel.Text = "Download completed. Saving file...";
                     FlacWriter.Flush();
                     FlacBuffer.Flush();
 
@@ -102,7 +143,9 @@ namespace Wimp.Proxy.Demo
                         file.Write(bytes, 0, bytes.Length);
                     }
 
-                    StatusLabel.Text = "Proxy started...";
+                    SetProgress(0);
+                    SetStatusLabel("Download completed...");
+
                 }
             }
         }
